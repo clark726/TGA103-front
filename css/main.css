@@ -1,0 +1,221 @@
+@charset "UTF-8";
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
+}
+header.header {
+  font-size: 16px;
+  /* border: 1px solid red; */
+  width: 100%;
+  min-width: 1200px;
+  background-color: rgb(190 188 188);
+}
+.fl_left {
+  float: left;
+}
+a#logo {
+  text-decoration: none;
+  margin-left: 20px;
+  display: inline-block;
+  margin-top: 5px;
+  color: black;
+}
+#logo_h1 {
+  margin: 0px;
+}
+.fl_right {
+  /* float: right; */
+}
+ul.nav_ul {
+  display: inline-block;
+  margin-left: 100px;
+  height: 30px;
+  margin-top:20px
+}
+ul.nav_ul li {
+  display: inline-block;
+  margin: 0 20px;
+  position: relative;
+}
+ul.nav_ul li:hover ul#store {
+  visibility: visible;
+}
+ul.nav_ul li a {
+  text-decoration: none;
+  color: black;
+  width: 200px;
+}
+ul.nav_ul ul {
+  visibility: hidden;
+  position: absolute;
+  display: block;
+  background-color:  rgb(190 188 188);
+  padding: 0px;
+  width: 150px;
+  padding-right: 20px;
+}
+ul.nav_ul ul li {
+  margin: 5px;
+  width: 100%;
+  padding: 5px;
+}
+ul.nav_ul ul li a {
+  /* color: rgb(177, 123, 56); */
+}
+ul.nav_ul li a:hover {
+  color: white;
+}
+ul.nav_ul li a.icon::after {
+  content: "";
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border-top: 5px solid gray;
+  border-bottom: 0px solid red;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  position: relative;
+  top: -2px;
+  margin-left: 5px;
+}
+
+/* 廠商彈窗 */
+a.sumit{
+  text-decoration: none;
+  font-size: 30px;
+  
+}
+.modal-header h3{
+  font-size: 30px;
+  color: black;
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input.account,
+input.password {
+margin: 30px;
+width: 90%;
+border-radius: 20px;
+}
+
+
+
+
+/* ---------------換圖---------------------------------------------------------- */
+
+.picture{
+  width: 100%;
+  height: 350px;
+}
+#carouselExampleIndicators{
+  margin-bottom: 50px;
+}
+
+/* ---------------店家分類-------------------------------------------------------------- */
+.Classification {
+  /* border: 1px solid red; */
+  margin: auto;
+}
+.ul_Classification {
+  /* border: 1px solid blue; */
+  display: flex;
+  vertical-align: middle;
+  justify-content: space-around;
+  align-content: space-around;
+  list-style: none;
+  margin: auto;
+}
+.ul_Classification > li > a {
+  text-decoration: none;
+  font-size: 20px;
+  color: black;
+}
+.ul_Classification > li > a > h2 {
+  text-align: center;
+}
+.ul_Classification > li > a > img {
+  border-radius: 5%;
+}
+.Classification_name {
+  display: flex;
+  vertical-align: text-bottom;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: space-between;
+  justify-content: center;
+  align-items: baseline;
+}
+/* ---------------Footer-------------------------------------------------------------- */
+footer#footer {
+  /* border: 1px solid red; */
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  /* min-height: 100%; */
+  height: 100px;
+  display: flex;
+  background-color:  rgb(190 188 188);
+  flex-direction: row;
+  justify-content: space-around;
+  /* margin-bottom: -50px; */
+  min-width: 1200px;
+}
+
+footer#footer div.div_li {
+  /* border: 1px solid red; */
+}
+footer#footer div.div_li > h2 {
+  text-shadow: 3px;
+  color: black;
+  margin: 10px;
+  /* margin-top: 10px; */
+}
+footer#footer div.div_li > ul {
+  padding: 0px;
+}
+footer#footer div.div_li > ul > li {
+  list-style: none;
+}
+footer#footer div.div_li > ul > li > a {
+  color:black;
+  text-decoration: none;
+}
+footer#footer div.div_li > ul > li > a:hover {
+  background-color: black;
+  color: aliceblue;
+}
+div.div_img img {
+  height: 100%;
+  width: 250px;
+  display: block;
+  /* margin-right: 75%; */
+}
+
+/*---------------響應式-------------------------------------------------------------- */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  header.header,
+  footer.footer,
+  img {
+    width: 540px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 575.98px) {
+  header.header,
+  footer.footer,
+  main.main {
+    width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+

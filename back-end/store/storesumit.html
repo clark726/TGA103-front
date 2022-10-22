@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>StoreSumit</title>
+
+<link rel="stylesheet" href="../../css/header.css" />
+<link 
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+	crossorigin="anonymous" />
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+	crossorigin="anonymous"></script>
+
+    <style>
+        div.col-6{
+            margin-bottom: 15px;
+        }
+    </style>
+
+</head>
+<body  style="background-color: rgb(216, 208, 208)">
+    <div id="xxx"></div>
+
+   
+    <div class="container">
+        <div class="row align-items-center justify-content-center ">
+            <div class="col-6">
+                <h1>商家註冊</h1>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center ">
+            <div class="col-6">
+                <input type="text" class="form-control" id="account" placeholder="帳號">
+                <span id="accounterror" style="color: red;"></span> <span id="accountsuccess" style="color:green ;"></span>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-6">
+                <input id="password" type="password" class="form-control" placeholder="密碼" >
+                <span id="passworderror" style="color: red;"></span> 
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-6">
+                <input id="storename" type="text" class="form-control" placeholder="店家名稱">
+                <span id="storenameerror" style="color: red;"></span> 
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-6">
+                <input id="phone" type="text" class="form-control" placeholder="電話">
+                <span id="phoneerror" style="color: red;"></span> 
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-6">
+                <input id="email" type="email" class="form-control" name="email" placeholder="Email">
+                <span id="emailerror" style="color: red;"></span> 
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-6">
+                <input class=" form-control js-demeter-tw-zipcode-selector" data-city="#city" data-dist="#dist" placeholder="請輸入郵遞區號" style="width: 150px; display: inline-block;"/>
+                 <select id="city" placeholder="請選擇縣市" name="city" class="form-select" style="width: 150px; display: inline-block;"></select>
+				<select id="dist" placeholder="請選擇鄉鎮區" name="dist" class="form-select" style="width: 150px; display: inline-block;"></select>
+				<input id="address" type="text" id="register_addr" class="form-control register_control" name="address" placeholder="請輸入地址
+                "/>  <span id="addresserror" style="color: red;"></span> 
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center">
+            <div class="col-6">
+                <select id="storeType" name="theme_id" class="form-select" >
+                    <option value="1">Bistro</option>
+                    <option value="2">Cocktail Bar</option>
+                    <option value="3">Whisky Bar</option>
+                  </select>
+            </div>
+        </div>
+
+        <div class="row align-items-center justify-content-center">
+            <div class="col-6">
+                <button type="button" class="btn btn-secondary" id="sumit">註冊</button>
+            </div>
+        </div>
+       
+    </div>
+</body>
+
+
+<script src="https://code.jquery.com/jquery-3.6.1.js"
+		integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+		crossorigin="anonymous"></script>
+	<script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
+    <script src="../js/header.js"></script>
+<script>
+   
+  
+ 
+let account = document.querySelector("#account")
+let accountsuccess = document.querySelector("#accountsuccess")
+let accounterror = document.querySelector("#accounterror")
+ //驗證帳號
+ document.querySelector("#account").addEventListener("blur", function(){
+   if(  account.value.length < 5){
+             accountsuccess.innerText = ""
+            accounterror.innerText = ""
+            accounterror.innerText = "請輸入超過5碼"
+   }else{
+    fetch('/TGA103G1/VerifyAccount', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        account:account.value
+      }),
+    })
+      .then(resp => resp.json() )
+      .then(body => {
+        const{successful , message} = body
+        if(successful){
+            accountsuccess.innerText = ""
+            accounterror.innerText = ""
+            accountsuccess.innerText = message
+        }else{
+            accountsuccess.innerText = ""
+            accounterror.innerText = ""
+            accounterror.innerText = message
+        }
+      });
+    }
+ });
+let password = document.querySelector("#password")
+let storename = document.querySelector("#storename")
+let phone = document.querySelector("#phone")
+let email = document.querySelector("#email")
+let city = document.querySelector("#city")
+let dist = document.querySelector("#dist")
+let address = document.querySelector("#address")
+let storeType = document.querySelector("#storeType")
+
+//password
+let passworderror = document.querySelector("#passworderror")
+password.addEventListener("blur", function(){
+    let passworderror = document.querySelector("#passworderror")
+    if(password.value.length < 5){
+        passworderror.innerText = ""
+        passworderror.innerText = "請超過五碼"
+    }else{
+        passworderror.innerText = ""
+    }
+});
+//驗證電話
+let phoneerror = document.querySelector("#phoneerror")
+const rules = /[0-9]{10}/
+phone.addEventListener("blur" , function(){
+    if(phone.value.length < 10 || !rules.test(phone.value)){
+        phoneerror.innerText = ""
+        phoneerror.innerText = "電話長度請超過10個字元且不能是字母"
+    }else{
+        phoneerror.innerText = ""
+    }
+});
+//驗證email
+let emailerror = document.querySelector("#emailerror")
+const rulesemail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+email.addEventListener("blur" , function(){
+    if( !rulesemail.test(email.value)){
+        emailerror.innerText = ""
+        emailerror.innerText = "請符合email格式"
+    }else{
+        emailerror.innerText = ""
+    }
+});
+//驗證地址
+let addresserror = document.querySelector("#addresserror")
+address.addEventListener("blur" , function(){
+    if(address.value.length == 0){
+        addresserror.innerText = ""
+        addresserror.innerText = "請勿空白"
+    }else{
+        addresserror.innerText = ""
+    }
+});
+//驗證店家名稱
+let storenameerror = document.querySelector("#storenameerror")
+storename.addEventListener("blur" , function(){
+    if(storename.value.length == 0){
+        storenameerror.innerText = ""
+        storenameerror.innerText = "請勿空白"
+    }else{
+        storenameerror.innerText = ""
+    }
+});
+ //送出註冊
+document.querySelector("#sumit").addEventListener("click" , function(){
+    let correctAddress = city.value + dist.value + address.value;
+
+    if(accounterror.innerText == "" && passworderror.innerText == "" && phoneerror.innerText == "" && emailerror.innerText == "" && addresserror.innerText == "" && storenameerror.innerText == "" && storename.value != ""){
+
+        //轉換經緯度
+    let cros = 'https://cors-anywhere.herokuapp.com/'
+    fetch(cros+'https://maps.googleapis.com/maps/api/geocode/json?address='+correctAddress+'&key=AIzaSyA8huJrjACqoILrwvDvMuR8Ntv_aAYLOKQ', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' ,
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods':'POST, GET, PUT, DELETE'
+               },
+    })
+      .then(resp => resp.json() )
+      .then(body => {
+        console.log(body)
+      let lat = body.results[0].geometry.location.lat
+      let lng = body.results[0].geometry.location.lng
+
+      fetch('/TGA103G1/StoreSumit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+
+        lat:lat,
+        lng:lng,
+        account:account.value,
+        password:password.value,
+        name:storename.value,
+        phone:phone.value,
+        email:email.value,
+        address:city.value + dist.value + address.value,
+        theme_id: storeType.value
+      }),
+    })
+      .then(resp => resp.json() )
+      .then(body => {
+        if(body.successful){
+            alert("註冊成功")
+            // location = "/TGA103G1/main.html";
+        }
+      });
+    })
+   
+    }else{
+        alert("請按照格式填寫")
+    }
+    
+    
+    
+    
+})
+
+ 
+     </script>
+</html>

@@ -1,0 +1,128 @@
+@charset "UTF-8";
+html {
+  height: 100vh;
+}
+.contain {
+  /* border: 1px solid red; */
+  width: 100%;
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+aside.aside,
+main.main {
+  /* display: inline-block; */
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  /* height: calc(100vh - 54.4px - 100px); */
+}
+
+aside.aside {
+  /* border: 1px solid rgb(102, 250, 102); */
+  width: 300px;
+  height: 100%;
+  /* margin-left: 150px; */
+  background-color: #3f3a38;
+  color: antiquewhite;
+}
+
+div.contain aside.aside p#p1 {
+  /* border: 1px solid red; */
+  text-align: center;
+  font-size: 34px;
+  font-style: inherit;
+}
+div.contain aside.aside div.div_func {
+  /* border: 1px solid red; */
+  padding: 5px;
+}
+div.contain aside.aside div.div_func div {
+  /* border: 1px solid blue; */
+
+  font-size: 24px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  /* margin: auto; */
+  text-align: center;
+}
+div.contain aside.aside div.div_func div > a {
+  /* border: 1px solid red; */
+  /* border: 0px solid transparent; */
+  /* outline: n one; */
+  vertical-align: middle;
+}
+div.contain aside.aside div.div_func div > a:hover {
+  background-color: rgb(137, 100, 6);
+  color: white;
+  cursor: pointer;
+}
+/* -------------主內容----------------------------------------------- */
+main.main {
+
+  width: calc(100% - 200px - 20px);
+  height: 100%;
+  /* margin-right: 150px; */
+}
+div.store_all {
+  display: flex;
+  flex-direction: column;
+ 
+}
+div.title {
+  text-align: center;
+}
+div.store_produce {
+  text-align: center;
+  display: flex;
+  margin-bottom: 40px;
+}
+div.store_produce:last-child{
+  margin-bottom: 0px;
+}
+div.store_produce h2 {
+  margin-left: 30px;
+  margin-right: 50px;
+  width: 100px;
+}
+#textarea{
+  font-size: 30px;
+}
+input#time {
+  border: 1px solid black;
+  font-size: 20px;
+  height: 40px;
+  width: 120px;
+  margin-top: 15px;
+}
+
+.preview {
+  border: 1px solid lightgray;
+  display: flex;
+  width: 130px;
+  min-height: 150px;
+  position: relative;
+  margin-right: 50px;
+}
+.preview span.text {
+  position: absolute;
+  display: inline-block;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  color: lightgray;
+}
+div.inner_button {
+  display: inline-block;
+}
+div.inner_button button {
+
+  width: 200px;
+  height: 50px;
+  margin: 30px;
+  font-size: 30px;
+}
+.preview img.preview_img {
+  width: 100%;
+}

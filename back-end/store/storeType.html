@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/storeType.css" />
+    <link rel="stylesheet" href="../../css/header.css" />
+    <link rel="stylesheet" href="../../css/footer1.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body style="background-color: rgb(224, 215, 208)" onload="connectWS()">
+    <div id="xxx"></div>
+
+    <!-- 推播視窗 -->
+    <button
+      type="button"
+      class="btn btn-primary"
+      id="liveToastBtn"
+      style="display: none"
+    ></button>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+      <div
+        id="liveToast"
+        class="toast hide"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="toast-header">
+          <strong class="me-auto">BarJarJo</strong> <small>幾秒之前</small>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="toast-body">
+          <p id="toastbody" style="font-size: 20px"></p>
+          <img src="" id="img" style="width: 200px; height: 200px" />
+        </div>
+      </div>
+    </div>
+    <!-- 推播視窗結束 -->
+
+    <!-- 跳出聊天視窗 -->
+
+    <div class="modal fade" id="chaticon">
+      <div class="modal-dialog">
+        <div class="modal-content" style="background-color: rgb(211, 206, 201)">
+          <!-- header -->
+          <div class="modal-header">
+            <h3>聊天室</h3>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <!-- body -->
+          <div class="modal-body"></div>
+
+          <!-- 聊天表單 -->
+          <div class="container">
+            <h3 id="statusOutput" class="statusOutput"></h3>
+            <div id="row"></div>
+            <div
+              id="messagesArea"
+              class="panel message-area"
+              style="margin-top: 0px; margin-left: 200px; height: 304px"
+            ></div>
+            <div class="panel input-area">
+              <input
+                id="message"
+                class="text-field"
+                type="text"
+                placeholder="Message"
+                onkeydown="if (event.keyCode == 13) sendMessage();"
+              />
+              <input
+                type="submit"
+                id="sendMessage"
+                class="button"
+                value="Send"
+                onclick="sendMessage();"
+              />
+              <input
+                type="button"
+                id="connect"
+                class="button"
+                value="Connect"
+                onclick="connect();"
+              />
+              <input
+                type="button"
+                id="disconnect"
+                class="button"
+                value="Disconnect"
+                onclick="disconnect();"
+              />
+            </div>
+          </div>
+          <!-- Footer -->
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+    <!-- 跳出聊天視窗結束 -->
+
+    <main class="main">
+      <div class="top">
+        <div class="div_produce">
+          <div class="div_title">
+            <h1 id="storetype"></h1>
+          </div>
+          <p id="storeproduce"></p>
+        </div>
+        <div class="div_img">
+          <img src="" id="displayImg" style="width: 600px; height: 200px" />
+        </div>
+      </div>
+      <hr />
+
+      <div class="botton">
+        <ul class="item_list"></ul>
+      </div>
+    </main>
+    <!-- 聊天按鈕 -->
+    <div class="icon">
+      <img
+        src="../../img/chat.png"
+        id="chaticonpricture"
+        data-bs-toggle="modal"
+        data-bs-target="#chaticon"
+        style="
+          width: 60px;
+          height: 60px;
+          position: absolute;
+          right: 10px;
+          bottom: 40px;
+          display: none;
+        "
+        class="picture"
+      />
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.js"
+      integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+      crossorigin="anonymous"
+    ></script>
+    <script src="../js/chat.js"></script>
+    <script>
+      function includeHTML() {
+        const xxx = document.querySelector("#xxx");
+        fetch("/TGA103G1-boot/com/header.html")
+          .then((resp) => resp.text())
+          .then((content) => {
+            xxx.innerHTML = content;
+
+            changelog();
+            logout();
+            changeTheme();
+            like();
+            clickStore();
+            const username = document.querySelector("#account");
+            const password = document.querySelector("#password");
+            const errMsg = document.querySelector("#errMsg");
+            document.getElementById("btn1").addEventListener("click", () => {
+              fetch("/TGA103G1-boot/StoreLogin", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  account: username.value,
+                  password: password.value,
+                }),
+              })
+                .then((resp) => resp.json())
+                .then((body) => {
+                  errMsg.textContent = "";
+                  const { successful, message } = body;
+                  if (successful) {
+                    const { account, password } = body;
+                    sessionStorage.setItem("account", account);
+                    sessionStorage.setItem("password", password);
+                  } else {
+                    errMsg.textContent = message;
+                  }
+                });
+            });
+          });
+      }
+      includeHTML();
+
+      //登出鈕
+      function changelog() {
+        if (sessionStorage.getItem("account")) {
+          document.querySelector("#login").style.display = "none";
+          document.querySelector("#logout").style.display = "block";
+          document.querySelector("#loginbox").style.display = "none";
+          document.querySelector("#normal").style.display = "block";
+        }
+      }
+
+      //登出
+      function logout() {
+        document
+          .querySelector("#logout")
+          .addEventListener("click", function () {
+            sessionStorage.removeItem("account");
+          });
+      }
+      //加入最愛
+      function like() {
+        $(document).on("click", ".fa-heart", function (e) {
+          let store_id = $(this)
+            .closest("li")
+            .find("#storeId")
+            .attr("data-store_id");
+          console.log(store_id);
+          if (sessionStorage.getItem("memberAccount") == null) {
+            alert("請先登入");
+          } else {
+            $(this).toggleClass("-on");
+            if ($(this).hasClass("-on")) {
+              fetch("/TGA103G1-boot/AddFavorite", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  store_id: store_id,
+                }),
+              })
+                .then((resp) => resp.json())
+                .then((body) => {
+                  console.log(body);
+                });
+            } else {
+              fetch("/TGA103G1-boot/DeleteFavorite", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  store_id: store_id,
+                }),
+              })
+                .then((resp) => resp.json())
+                .then((body) => {
+                  console.log(body);
+                });
+            }
+          }
+        });
+      }
+
+      //點擊theme_id
+      function changeTheme() {
+        let allthemeid = document.querySelectorAll(".theme_id");
+        allthemeid.forEach(function (e) {
+          e.addEventListener("click", function (e) {
+            let id = e.target.getAttribute("data-themid");
+            sessionStorage.setItem("themeId", id);
+          });
+        });
+      }
+      //點擊store_id
+      function clickStore() {
+        $(document).on("click", "#storeId", function (e) {
+          console.log(e.target.getAttribute("data-store_id"));
+          let store_id = e.target.getAttribute("data-store_id");
+          sessionStorage.setItem("store_id", store_id);
+        });
+      }
+
+      //先看是否有我的最愛
+      let arrayFavorite = new Array();
+      fetch("/TGA103G1-boot/FindFavorite", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((resp) => resp.json())
+        .then((body) => {
+          console.log(body);
+          for (var i = 0; i < body.length; i++) {
+            let favoritedStore = body[i].store_id;
+            if (arrayFavorite != null) {
+              arrayFavorite.push(favoritedStore);
+            }
+          }
+          sessionStorage.setItem("favoritedStore", arrayFavorite);
+        });
+
+      //抓取店家
+      let themeId = sessionStorage.getItem("themeId");
+      let storetype = document.querySelector("#storetype");
+      let storeproduce = document.querySelector("#storeproduce");
+      let displayImg = document.querySelector("#displayImg");
+
+      fetch("/TGA103G1-boot/ShowStoreType", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          theme_id: themeId,
+        }),
+      })
+        .then((resp) => resp.json())
+        .then((body) => {
+          storetype.textContent = body[0].storetype;
+          storeproduce.textContent = body[0].storeproduce;
+          displayImg.src = body[0].imgstr;
+          //判斷是否有會員 有我的最愛加上愛心
+          if (arrayFavorite != null) {
+            for (var i = 0; i < body["length"]; i++) {
+              // console.log(body[i])
+              var x = 0;
+              for (var j = 0; j < arrayFavorite.length; j++) {
+                if (body[i].store_id == arrayFavorite[j]) {
+                  x = arrayFavorite[j];
+                  $("ul.item_list").append(`
+					 <li><i data-storeId ="${body[i].store_id}" class="fa-solid fa-heart -on"></i> 
+						<i class="fa-sharp fa-solid fa-comment-dots clickIcon" id="${body[i].name}" ></i>
+					<a href="/TGA103G1-boot/back-end/store/store.html">
+							 <div class="img_block">
+								 <img src="${body[i].imgstr}" id="storeId" data-store_id="${body[i].store_id}" />
+							 </div>
+							 <div class="icon">
+								 <span class="item_text">${body[i].name}</span>
+							 </div>
+							 </a></li>`);
+                }
+              }
+              if (body[i].store_id != x) {
+                $("ul.item_list").append(`
+						 <li><i data-storeId="${body[i].store_id}" class="fa-solid fa-heart"></i> 
+							<i class="fa-sharp fa-solid fa-comment-dots clickIcon"  id="${body[i].name}" ></i>
+						<a href="/TGA103G1-boot/back-end/store/store.html">
+								 <div class="img_block">
+									 <img src="${body[i].imgstr}" id="storeId" data-store_id="${body[i].store_id}" />
+								 </div>
+								 <div class="icon">
+									 <span class="item_text">${body[i].name}</span>
+								 </div>
+								 </a></li>`);
+              }
+            }
+          } else {
+            for (var i = 0; i < body.length; i++) {
+              $("ul.item_list").append(`
+						 <li><i data-storeId="${body[i].store_id}" class="fa-solid fa-heart"></i> 
+							<i class="fa-sharp fa-solid fa-comment-dots clickIcon" id="${body[i].name}" ></i>
+						<a href="/TGA103G1-boot/back-end/store/store.html">
+								 <div class="img_block">
+									 <img src="${body[i].imgstr}" id="storeId" data-store_id="${body[i].store_id}" />
+								 </div>
+								 <div class="icon">
+									 <span class="item_text">${body[i].name}</span>
+								 </div>
+								 </a></li>`);
+            }
+          }
+        });
+
+      //WS 全體推播
+      let MyPointWS = "/TogetherWS/james";
+      let pathWS = window.location.pathname;
+      let webCtxWS = pathWS.substring(0, pathWS.indexOf("/", 1));
+      let endPointURLWS = "ws://" + window.location.host + webCtxWS + MyPointWS;
+
+      let webSocketWS;
+
+      let p_name = document.querySelector("#p_name");
+      let toastheader = document.querySelector("#toastheader");
+      let toastbody = document.querySelector("#toastbody");
+      let liveToastBtn = document.querySelector("#liveToastBtn");
+      let img = document.querySelector("#img");
+      function connectWS() {
+        // create a webSocketWS
+        webSocketWS = new WebSocket(endPointURLWS);
+
+        webSocketWS.onopen = function (event) {};
+
+        webSocketWS.onmessage = function (event) {
+          var jsonObj = JSON.parse(event.data);
+          toastbody.innerText = jsonObj.message;
+          img.setAttribute("src", jsonObj.img);
+          liveToastBtn.click();
+        };
+      }
+
+      //bootstrap
+      $(document).on("click", "#liveToastBtn", function () {
+        new bootstrap.Toast(document.querySelector(".toast")).show();
+      });
+
+      
+    </script>
+  </body>
+</html>

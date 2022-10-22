@@ -1,0 +1,106 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
+}
+header.header {
+  font-size: 16px;
+  /* border: 1px solid red; */
+  width: 100%;
+  min-width: 1200px;
+   background-color: rgb(190 188 188);
+}
+.fl_left { 
+  float: left;
+}
+a#logo {
+  text-decoration: none;
+  margin-left: 20px;
+  display: inline-block;
+  margin-top: 5px;
+  color: black;
+}
+#logo_h1 {
+  margin: 0px;
+}
+.fl_right {
+  /* float: right; */
+}
+ul.nav_ul {
+  display: inline-block;
+  margin-left: 100px;
+  height: 30px;
+  margin-top:20px
+}
+ul.nav_ul li {
+  display: inline-block;
+  margin: 0 20px;
+  position: relative;
+}
+ul.nav_ul li:hover ul#store {
+  visibility: visible;
+}
+ul.nav_ul li a {
+  text-decoration: none;
+  color: black;
+  width: 200px;
+}
+ul.nav_ul ul {
+  visibility: hidden;
+  position: absolute;
+  display: block;
+  background-color:  rgb(190 188 188);
+  padding: 0px;
+  width: 150px;
+  padding-right: 20px;
+}
+ul.nav_ul ul li {
+  margin: 5px;
+  width: 100%;
+  padding: 5px;
+}
+ul.nav_ul ul li a {
+  /* color: rgb(177, 123, 56); */
+}
+ul.nav_ul li a:hover {
+  background-color: rgb(190 188 188);
+  color: white;
+}
+ul.nav_ul li a.icon::after {
+  content: "";
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border-top: 5px solid gray;
+  border-bottom: 0px solid red;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  position: relative;
+  top: -2px;
+  margin-left: 5px;
+}
+
+/* 廠商彈窗 */
+a.sumit{
+  text-decoration: none;
+  font-size: 30px;
+  
+}
+.modal-header h3{
+  font-size: 30px;
+  color: black;
+  position: absolute;
+  top: 7%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input.account,
+input.password {
+margin: 30px;
+width: 90%;
+border-radius: 20px;
+}
+

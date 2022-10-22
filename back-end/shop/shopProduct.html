@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>shopProduct</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../css/header.css" />
+  <link rel="stylesheet" href="../../css/shopProduct.css">
+  <style>
+    .allproduct {
+      text-align: center;
+    }
+
+    #shopicon {
+      position: fixed;
+      right: 50px;
+      bottom: 80px;
+    }
+
+    #iconcount {
+      background-color: rgb(99, 73, 73);
+      position: fixed;
+      right: 50px;
+      bottom: 140px;
+      font-size: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="xxx"></div>
+  <div id="vueAll">
+    <div class="contain">
+      <aside class="aside">
+        <p id="p1">調酒類別</p>
+        <div class="div_func">
+          <div>
+            <a class="edit_store allType" type="button" data-id="1">水果類</a>
+          </div>
+          <div>
+            <a class="manager_item allType" type="button" data-id="2">茶類</a>
+          </div>
+          <div>
+            <a class="edit_item allType" type="button" data-id="3">氣泡類</a>
+          </div>
+          <div>
+            <a class="edit_item allType" type="button" data-id="4">草本類</a>
+          </div>
+
+        </div>
+      </aside>
+      <main class="main">
+        <h1>{{message}} </h1>
+        <div class="container">
+          <!-- <div class="row row-cols-1 row-cols-md-4 g-5" id="row">{{message}}</div> -->
+          <div class="row row-cols-1 row-cols-md-4 g-5" id="rows">
+            <div class="col" v-for="(item, index) in data" :key="index">
+              <div class="card allproduct" style="max-width: 18rem;">
+                <img :src="item.product_id" class="card-img-top ">
+                <div class="card-body">
+                  <h5 class="card-title" id="name">{{item.name}}</h5>
+                  <p class="card-text" style="
+                margin-bottom: 5px;">{{item.description}}</p>
+                  <div class="card-text">
+                    <span>$</span><span id="price">{{item.price}}</span>
+                  </div>
+                  <p style="display:inline-block ;">訂購數量</p>
+                  <select name="amount" id="">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                  <a class="btn btn-secondary shopOrder" :data-storeId="item.store_id"
+                    :data-id="item.product_id" style="display:block ;">加到購物車</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 購物車按鈕 -->
+          <span class="badge" id="iconcount"></span>
+          <svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="modal" data-bs-target="#exampleModal" id="shopicon"
+            width="70" height="70" fill="currentColor" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
+            <path
+              d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z" />
+          </svg>
+
+
+          <!-- 彈出結帳視窗 -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">購物車</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary"> <a id="checkBtn"
+                      style="text-decoration: none; color: white;"
+                      href="/TGA103G1/back-end/shop/shopCheck.html">前往結帳</a> </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 彈出結帳視窗結束 -->
+      </main>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="../js/headers.js"></script>
+  <script>
+
+    Vue.createApp({
+      data() {
+        return {
+          message: 'Hello World',
+          data: []
+        }
+      },
+      method: {
+
+      },
+      created: function () {
+        const requestOptions = {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        };
+        fetch("/TGA103G1-boot/api/GetProductByTypeId", requestOptions)
+          .then(response => response.json())
+          .then(body => {
+            let url = "/TGA103G1-boot/api/ShowStorePage?action=getImg&product_id="
+           
+            this.data = body.map((e)=>{
+              e.product_id = url+e.product_id
+              return e
+            }),
+            console.log(body)
+      });
+      }
+    }).mount("#vueAll")
+
+    let url = "/TGA103G1-boot/api/ShowStorePage?action=getImg&product_id=";
+    //進到頁面顯示全部商品
+    fetch('/TGA103G1-boot/api/GetProductByTypeId', {
+      method: 'GET',
+      headers: { 'Content-type': 'application/json' },
+    })
+      .then(resp => resp.json())
+      .then(body => {
+        //先清空
+        $("#row").html("")
+        for (var i = 0; i < body.length; i++) {
+          $("#row").append(`
+          <div class="col">
+                      <div class="card allproduct" style="max-width: 18rem;">
+                        <img src="${url + body[i].product_id}" class="card-img-top " >
+                        <div class="card-body">
+                          <h5 class="card-title" id="name">${body[i].name}</h5>
+                          <p class="card-text" style="
+                          margin-bottom: 5px;">${body[i].description}</p>
+                          <div class="card-text">
+                            <span>$</span><span id="price">${body[i].price}</span>
+                          </div>
+                          <p style="display:inline-block ;">訂購數量</p>
+                          <select name="amount" id="">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                          </select>
+                          <a  class="btn btn-secondary shopOrder" data-storeId = ${body[i].store_id} data-id="${body[i].product_id}" style="display:block ;">加到購物車</a>
+                        </div>
+                      </div>
+                    </div>
+          
+          `)
+        }
+      });
+
+
+
+    //點擊顯示個別種類商品
+    $(".allType").on("click", function (e) {
+      let dataId = e.target.getAttribute("data-id");
+      //先清空
+      $("#row").html("")
+      fetch('/TGA103G1-boot/api/GetProductByTypeId', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type_id: dataId
+        }),
+      })
+        .then(resp => resp.json())
+        .then(body => {
+          for (var i = 0; i < body.length; i++) {
+            $("#row").append(`
+          <div class="col">
+                      <div class="card allproduct" style="max-width: 18rem;">
+                        <img src="${url + body[i].product_id}" class="card-img-top " >
+                        <div class="card-body">
+                          <h5 class="card-title" id="name">${body[i].name}</h5>
+                          <p class="card-text" style="
+                          margin-bottom: 5px;">${body[i].description}</p>
+                          <div class="card-text">
+                            <span>$</span><span id="price">${body[i].price}</span>
+                          </div>
+                          <p style="display:inline-block ;">訂購數量</p>
+                          <select name="amount" id="">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                          </select>
+                          <a  class="btn btn-secondary shopOrder" data-storeId = ${body[i].store_id} data-id="${body[i].product_id}" style="display:block ;">加到購物車</a>
+                        </div>
+                      </div>
+                    </div>
+          
+          `)
+          }
+        });
+
+    });
+
+    //加入購物車
+    let productArray = new Array();
+    $(document).on("click", ".shopOrder", function (e) {
+      let count = $(this).closest("div").find("select").val()
+      let price = $(this).closest("div").find("#price").text()
+      let name = $(this).closest("div").find("#name").text()
+      let id = $(this).attr("data-id")
+      let storeId = $(this).attr("data-storeId")
+
+
+      if (!sessionStorage.getItem("product")) {
+
+        product = {
+          name: name,
+          price: price,
+          count: count,
+          productId: id,
+          storeId: storeId
+        }
+        productArray.push(product)
+        sessionStorage.setItem("product", JSON.stringify(productArray));
+      } else {
+        //需要把字串轉文字且判斷是否重複
+        var oldName = sessionStorage.getItem("product");
+
+        for (var i = 0; i < JSON.parse(oldName).length; i++) {
+          if (JSON.parse(oldName)[i].name == name) {
+            var oldcount = JSON.parse(oldName)[i].count;
+            var newcount = Number(oldcount) + Number(count)
+
+            //重新整理陣列變空值後重新再取值 點選相同商品
+            if (productArray.length != 0) {
+              productArray[i].count = newcount
+              sessionStorage.setItem("product", JSON.stringify(productArray));
+              iconChange()
+              return
+            } else {
+              var productJSON = JSON.parse(sessionStorage.getItem("product"))
+              for (var j = 0; j < productJSON.length; j++) {
+                productArray.push(productJSON[j])
+              }
+              productArray[i].count = newcount
+              sessionStorage.setItem("product", JSON.stringify(productArray));
+              iconChange()
+              return
+            }
+          }
+        }
+        //重新整理陣列變空值後重新再取值 點選不同商品
+        if (productArray.length != 0) {
+          product = {
+            name: name,
+            price: price,
+            count: count,
+            productId: id,
+            storeId: storeId
+          }
+          productArray.push(product)
+          sessionStorage.setItem("product", JSON.stringify(productArray));
+        } else {
+          var productJSON = JSON.parse(sessionStorage.getItem("product"))
+          for (var j = 0; j < productJSON.length; j++) {
+            productArray.push(productJSON[j])
+          }
+          product = {
+            name: name,
+            price: price,
+            count: count,
+            productId: id,
+            storeId: storeId
+          }
+          productArray.push(product)
+          sessionStorage.setItem("product", JSON.stringify(productArray));
+        }
+      }
+      iconChange()
+    });
+
+    //icon顯示
+    function iconChange() {
+      let iconcount = $("#iconcount");
+      let size = JSON.parse(sessionStorage.getItem("product"));
+      if (size != null) {
+        iconcount.text("");
+        iconcount.text(size.length)
+      } else {
+        iconcount.text("0")
+      }
+
+
+    }
+    //重新整理也要呼叫
+    iconChange()
+
+    //點擊訂單明細
+    $(document).on("click", "#shopicon", function () {
+
+      let sessionProduct = JSON.parse(sessionStorage.getItem("product"))
+      if (sessionProduct != null) {
+        $(".modal-body").html("")
+        for (var i = 0; i < sessionProduct.length; i++) {
+
+          $(".modal-body").append(`
+          <div class="col-12" id="${i}">
+              <select name="amount" class="shopCount">
+                <option value="1" ${sessionProduct[i].count == 1 ? "selected" : ""}>1</option>
+                <option value="2" ${sessionProduct[i].count == 2 ? "selected" : ""}>2</option>
+                <option value="3" ${sessionProduct[i].count == 3 ? "selected" : ""}>3</option>
+                <option value="4" ${sessionProduct[i].count == 4 ? "selected" : ""}>4</option>
+                <option value="5" ${sessionProduct[i].count == 5 ? "selected" : ""}>5</option>
+                <option value="6" ${sessionProduct[i].count == 6 ? "selected" : ""}>6</option>
+                <option value="7" ${sessionProduct[i].count == 7 ? "selected" : ""}>7</option>
+                <option value="8" ${sessionProduct[i].count == 8 ? "selected" : ""}>8</option>
+                <option value="9" ${sessionProduct[i].count == 9 ? "selected" : ""}>9</option>
+                <option value="10" ${sessionProduct[i].count == 10 ? "selected" : ""}>10</option>
+              </select>
+              <span id="shopName">${sessionProduct[i].name}</span>
+              <span id="price" style="
+        font-size: 10px;">$${sessionProduct[i].price}</span>
+              <button style="float: right;  margin-left: 30px;" id="closebtn" type="button" class="btn-close" aria-label="Close"></button>
+              <span style="float: right;" id="shopPrice"> ${Number(sessionProduct[i].count) * Number(sessionProduct[i].price)}</span>
+            </div>
+          `)
+        }
+      }
+    });
+
+    //移除單個
+    $(document).on("click", "#closebtn", function (e) {
+      let productArray2 = new Array();
+      let sessionProduct = JSON.parse(sessionStorage.getItem("product"))
+      let selectProductName = ($(this).closest("div").find("#shopName").text());
+      for (var i = 0; i < sessionProduct.length; i++) {
+        if (sessionProduct[i].name != selectProductName) {
+          productArray2.push(sessionProduct[i])
+        }
+      }
+      //更新舊的陣列
+      productArray = productArray2
+      sessionStorage.setItem("product", JSON.stringify(productArray2))
+      iconChange()
+      $(this).closest("div").fadeOut()
+
+    });
+
+    //訂單明細更改數量
+    $(document).on("change", ".shopCount", function () {
+      let newcount = this.value;
+      let oldprice = $(this).closest("div").find("#shopPrice").text()
+      let productPrice = $(this).closest("div").find("#price").text().replace("$", "")
+      let order = $(this).closest("div").attr("id")
+      oldprice = Number(newcount) * Number(productPrice)
+      $(this).closest("div").find("#shopPrice").text(oldprice)
+      //更新sessionStorage
+      let array = []
+      var productJSON = JSON.parse(sessionStorage.getItem("product"))
+      for (var j = 0; j < productJSON.length; j++) {
+        array.push(productJSON[j])
+      }
+      array[order].count = newcount
+      sessionStorage.setItem("product", JSON.stringify(array));
+    });
+
+    //結帳按鈕
+    $("#checkBtn").click(function (e) {
+      if (sessionStorage.getItem("product") == null) {
+        alert("請選擇商品")
+        e.preventDefault();
+      }
+    });
+
+  </script>
+</body>
+
+</html>

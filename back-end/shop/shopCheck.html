@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>shopCheck</title>
+
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+rel="stylesheet"
+integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+crossorigin="anonymous"
+/>
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+crossorigin="anonymous"
+></script>
+
+<link rel="stylesheet" href="../../css/header.css" />
+</head>
+<body>
+    <div id="xxx"></div>
+
+    <div class="container">
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="panelsStayOpen-headingOne" >
+                <button class="accordion-button"  type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                  商品明細
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                <div class="accordion-body">
+                    <table class="table table-striped table-bordered table-hover table-condensed">
+                        <thead>
+                          <tr>
+                            <th scope="col">圖片</th>
+                            <th scope="col">數量</th>
+                            <th scope="col">產品名稱</th>
+                            <th scope="col">金額</th>
+                          </tr>
+                        </thead>
+                        <tbody id="detail"></tbody>
+                      </table>
+                      <div class="col-12">
+                        <span style="font-size:30px ;">總金額:</span><span id="allprice" style="font-size:30px; color: red;"></span>
+                      </div>
+               </div>
+
+                </div>
+              </div>
+            </div>
+          
+          </div>
+
+          <div class="col-12" style="margin-left:65px; margin-top: 15px;">
+            <h1>收貨人資訊</h1>
+        </div>
+        <div class="form-check" style="display:inline-block ;">
+            <input class="form-check-input postName" type="radio" name="postMethod" value="1" id="post" style="margin-left:50px ;" checked>
+            <label class="form-check-label" for="post">
+             郵寄
+            </label>
+        </div>
+        <div class="form-check" style="display:inline-block ;">
+            <input class="form-check-input postName" type="radio" name="postMethod" value="0" id="flexCheck" style="margin-left:50px ;">
+            <label class="form-check-label" for="flexCheck">
+             自取
+            </label>
+        </div>
+          <form class="row g-3 " style="margin-left:60px ; margin-right: 60px; margin-top: 15px; margin-top: 0px;" >
+            <div class="col-md-6">
+              <input type="email" class="form-control errorAll" id="name" placeholder="姓名">
+            </div>
+            <div class="col-md-6">
+              <input type="text" class="form-control errorAll" id="phone" placeholder="手機號碼">
+            </div>
+            
+            <div class="col-6">
+                <input class=" form-control js-demeter-tw-zipcode-selector" id="postalCode" data-city="#city" data-dist="#dist" placeholder="請輸入郵遞區號" style="width: 150px; display: inline-block;"/>
+                 <select id="city" placeholder="請選擇縣市" name="city" class="form-select" style="width: 150px; display: inline-block;"></select>
+				<select id="dist" placeholder="請選擇鄉鎮區" name="dist" class="form-select" style="width: 150px; display: inline-block;"></select>
+				<input id="address" type="text"  class="form-control register_control errorAll" name="address" placeholder="請輸入地址
+                "/>  
+            </div>
+          </form>
+
+          <div class="row" style="margin-left:60px; margin-top: 15px; ">
+            <div class="col-12">
+                <h1>選擇付款方式</h1>
+            </div>
+            <div class="col-6">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadio" id="radioCash" value="0">
+                    <label class="form-check-label" for="radioCash">
+                     現金
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadio" id="radioCard" value="1" checked>
+                    <label class="form-check-label" for="radioCard">
+                     信用卡
+                    </label>
+                  </div>
+            </div>
+          </div>
+          <div class="row" style="margin-left:60px; margin-top: 15px; margin-bottom: 20px; margin-right: 60px; ">
+            <div class="col-12">
+                <input type="text" id="note" class="form-control" aria-describedby="passwordHelpBlock" placeholder="訂單備註">
+            </div>
+       
+          </div>
+  
+
+
+
+          <div class="row" style="margin-bottom: 30px;">
+            <div class="col-12">
+                <a type="button" class="btn btn-secondary" id="sumit" style="display:block; margin-left: 60px; margin-right: 60px;">確認送出</a>
+            </div>
+          </div>
+
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+    integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+    crossorigin="anonymous"></script>
+<script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
+ <script src="../js/header.js"></script>
+<script>
+//取回商品資訊
+let url = "/TGA103G1/ShowStorePage?action=getImg&product_id=";
+  let product =  JSON.parse(sessionStorage.getItem("product")) 
+  let arrayprice = new Array();
+  for(var i = 0; i < product.length; i++){
+        $("#detail").append(`
+            <tr>
+            <td><img style="width:100px" src="${url+product[i].productId}"></td>
+            <td>${product[i].count}</td>
+            <td>${product[i].name}</td>
+            <td class="countPrice">${product[i].count*product[i].price}</td>
+            </tr>
+        `)
+        arrayprice.push(product[i].count*product[i].price)
+    }
+    //計算價錢總和
+    function SumDataforEach(arr){
+    var sum=0;
+    arr.forEach(function(element) {
+        sum+=element;
+    });
+    return sum;
+    }
+    $("#allprice").text(SumDataforEach(arrayprice))
+    
+
+    //錯誤處理
+    $(document).on("blur" , "#name", function(){
+        let name = $("#name").val()
+        
+        if(name.length == 0){
+            alert("名字請勿空白")
+        }
+    });
+    //驗證電話
+    let phone = document.querySelector("#phone")
+    const rules = /[0-9]{10}/
+    phone.addEventListener("blur" , function(){
+    if(phone.value.length < 10 || !rules.test(phone.value)){
+        alert("電話長度請超過10個字元且不能是字母")
+    }
+    });
+    //錯誤處理地址
+    $(document).on("blur" , "#address", function(){
+        let address = $("#address").val()
+        if(address.length == 0){
+            alert("地址請勿空白")
+        }
+    });
+  
+       
+    //新增訂單
+    document.querySelector("#sumit").addEventListener("click" , function(){
+    let pay_method = $('input[name=flexRadio]:checked').val()
+    let name = document.querySelector("#name").value
+    let phone = document.querySelector("#phone").value
+    let address = document.querySelector("#city").value +  document.querySelector("#dist").value +  document.querySelector("#address").value
+    let note = document.querySelector("#note").value
+    let product =  JSON.parse(sessionStorage.getItem("product")) 
+    let postMethod= $('input[name=postMethod]:checked').val()
+    let array = new Array();
+    let allPrice = SumDataforEach(arrayprice);
+    if(address == ""){
+        address = '自取'
+    }
+    console.log(address)
+    //錯誤處理
+    if(name == null || name.length == 0){
+        alert("名字請勿空白")
+    }
+    
+    //直接計算總和傳入後端
+   for(var i = 0; i < product.length; i++){
+        product2={
+            name:product[i].name,
+            price:product[i].price,
+            count:product[i].count,
+            productId:product[i].productId,
+            storeId:product[i].storeId,
+            allPrice:Number(product[i].price)*Number(product[i].count)
+        }
+        array.push(product2)
+   }
+  //綠界
+  if(postMethod == 1){
+    fetch('/TGA103G1/AddOrder',{
+        method:'POST',
+        headers:{'Content-type':'application/json'},
+        body: JSON.stringify({
+            price:allPrice,
+            orderSmallVO:array,
+        }),
+    })
+      .then(resp => resp.json())
+      .then(body =>{
+            console.log(body)
+      })
+    // fetch('https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5',{
+    //   method:'POST',
+    //   headers:{'Content-type':'application/x-www-form-urlencoded'},
+    //   body: JSON.stringify({
+    //     MerchantID:'3002599',
+    //     MerchantTradeNo:'abc123',
+    //     MerchantTradeDate:'2022/10/14 10:33:33',
+    //     PaymentType:'aio',
+    //     TotalAmount:allPrice,
+    //     TradeDesc:"基本交易",
+    //     ItemName:product[0].name,
+    //     ReturnURL:'/TGA103G1/back-end/shop/shopProduct.html',
+    //     ChoosePayment:'Credit',
+    //     CheckMacValue:'CFA9BDE377361FBDD8F160274930E815D1A8A2E3E80CE7D404C45FC9A0A1E407',
+    //     EncryptType:'1,'
+  
+  
+    //   })
+    // })
+  }
+    // fetch('/TGA103G1/AddOrder',{
+    //     method:'POST',
+    //     headers:{'Content-type':'application/json'},
+    //     body: JSON.stringify({
+    //         method:postMethod,
+    //         pay_method:pay_method,
+    //         name:name,
+    //         phone:phone,
+    //         address:address,
+    //         note:note,
+    //         orderSmallVO:array,
+    //     }),
+    // })
+    //   .then(resp => resp.json())
+    //   .then(body =>{
+    //         if(body.successful == true){
+    //             sessionStorage.removeItem("product");
+    //             alert("購買成功！");
+    //             location ="/TGA103G1/back-end/shop/shopProduct.html"
+
+    //         }else{
+    //             alert(body.message)
+    //             location ="/TGA103G1/back-end/shop/shopProduct.html"
+    //         }
+    //   })
+    })
+
+    //自取
+    $(document).on("click" , ".postName", function(){
+        if($("#flexCheck").prop("checked")){
+            $("#address").attr('disabled', true)
+            $("#city").attr('disabled', true)
+            $("#dist").attr('disabled', true)
+            $("#postalCode").attr('disabled', true)
+        }else{
+            $("#address").attr('disabled', false)
+            $("#city").attr('disabled', false)
+            $("#dist").attr('disabled', false)
+            $("#postalCode").attr('disabled', false)
+        }
+    })
+  
+
+  </script>
+</body>
+</html>

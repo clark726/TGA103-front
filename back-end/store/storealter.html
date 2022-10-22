@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Document</title>
+<link rel="stylesheet" href="../../css/storealter.css">
+<link rel="stylesheet" href="../../css/header.css" />
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+	crossorigin="anonymous" />
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+	crossorigin="anonymous"></script> 
+</head>
+<body style="background-color: rgb(216, 208, 208)">
+
+ 	<div id="xxx"></div>
+	<div class="contain">
+		<aside class="aside">
+			<p id="p1">廠商後台</p>
+			<div class="div_func">
+				<div>
+					<a class="edit_store" type="button">修改店家內容</a>
+				</div>
+				<div>
+					<a class="manager_item" type="button"
+						href="../product/productlist.jsp">商品管理</a>
+				</div>
+				<div>
+					<a class="edit_item" type="button"
+          href="/TGA103G1-boot/back-end/store/storeOrder.html">修改商家訂單內容</a>
+				</div>
+        <div>
+					<a class="edit_item" type="button"
+						href="/TGA103G1-boot/back-end/store/storeChat.html">店家私信</a>
+				</div>
+			</div>
+		</aside>
+		<main class="main">
+			
+				<div class="store_all">
+					<div class="title">
+					<h1 id="storename" style="display:inline-block ;"></h1>
+          <button id="store_inf"  class="btn btn-secondary" data-bs-toggle="modal" 
+        data-bs-target="#orderDetail">
+                店家資訊</button>
+					</div>
+					<div class="store_produce">
+						<h2>簡介</h2>
+						<textarea name="store_produce" id="textarea" cols="50" rows="3"></textarea>
+						<span id="errMsgUpdate" 
+							style="color: yellow; font-size: 20px"></span>
+							<span id="errMsgUpdateImg" 
+							style="color: yellow; font-size: 20px"></span>
+					</div>
+
+					<div class="store_produce">
+						<h2>營業開始</h2>
+						<select name="work_open" id="work_open"
+							style="font-size: 15px; height: 50px; width: 80px;">
+							<option value="17:00:00">17:00</option>
+							<option value="17:30:00">17:30</option>
+							<option value="18:00:00">18:00</option>
+							<option value="18:30:00">18:30</option>
+							<option value="19:00:00">19:00</option>
+							<option value="19:30:00">19:30</option>
+							<option value="20:00:00">20:00</option>
+							<option value="20:30:00">20:30</option>
+							<option value="21:00:00">21:00</option>
+							<option value="21:30:00">21:30</option>
+							<option value="22:00:00">22:00</option>
+							<option value="22:30:00">22:30</option>
+						</select>
+						<h2>營業結束</h2>
+						<select name="work_end" id="work_end"
+							style="font-size: 15px; height: 50px; width: 80px;">
+							<option value="21:00:00">21:00</option>
+							<option value="21:30:00">21:30</option>
+							<option value="22:00:00">22:00</option>
+							<option value="22:30:00">22:30</option>
+							<option value="23:00:00">23:00</option>
+							<option value="23:30:00">23:30</option>
+							<option value="24:00:00">24:00</option>
+							<option value="01:00:00">01:00</option>
+							<option value="01:30:00">01:30</option>
+							<option value="02:00:00">02:00</option>
+							<option value="02:30:00">02:30</option>
+							<option value="03:00:00">03:00</option>
+						</select>
+						<h2>公休日期</h2>
+					<input type="text" id="dayoff" class="form-label">
+				</div>
+
+					<div class="store_produce">
+						<h2>環境照片</h2>
+						<div class="file">
+							<input type="file" id="p_file1">
+							<div class="preview" id="preview1">
+								<img src="" id=mainImg class="preview_img"  accept="image/gif, image/jpeg, image/png"> <span
+									class="text" id="text1">首圖</span>
+							</div>
+						</div>
+
+						<div class="file">
+							<input type="file" id="p_file2">
+							<div class="preview" id="preview2">
+								<img src="" id="firstImg" class="preview_img"  accept="image/gif, image/jpeg, image/png"> <span
+									class="text" id="text2">內頁一</span>
+							</div>
+						</div>
+
+						<div class="file">
+							<input type="file" id="p_file3">
+							<div class="preview" id="preview3">
+								<img src="" id="secondImg" class="preview_img"  accept="image/gif, image/jpeg, image/png"> <span
+									class="text" id="text3">內頁二</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="store_produce">
+						<h2>菜單</h2>
+						<div class="file">
+							<input type="file" id="p_file4">
+							<div class="preview" id="preview4">
+								<img src="" id="meanuImg" class="preview_img"  accept="image/gif, image/jpeg, image/png"> <span
+									class="text" id="text4">菜單一</span>
+							</div>
+						</div>
+						<div class="file">
+							<input type="file" id="p_file5">
+							<div class="preview" id="preview5">
+								<img src="" id="meanuImg2" class="preview_img"  accept="image/gif, image/jpeg, image/png"> <span
+									class="text" id="text5">菜單二</span>
+							</div>
+						</div>
+						<div class="button">
+
+							<div class="inner_button">
+								<button type="button" id="updatebtn" class="btn btn-secondary">更新</button>
+							</div>
+						
+						</div>
+					</div>
+ 
+				</div>
+			
+
+           <!-- 明細彈窗 -->
+           <div class="modal fade" id="orderDetail">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header" style="height: 53px;">
+                  <h3>店家資訊</h3>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                
+                <div class="modal-body">
+                  <div class="col-md-6">
+                    <label for="storeName" class="form-label" >店家名稱</label>
+                    <input type="tetx" class="form-control" id="storeName" readonly>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="storeType" class="form-label">店家類型 </label>
+                    <select id="storeType" name="theme_id" class="form-select" disabled>
+                      <option value="1">Bistro</option>
+                      <option value="2">Cocktail Bar</option>
+                      <option value="3">Whisky Bar</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label for="storeAddress" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="storeAddress" readonly>
+                  </div>
+                  <div class="col-6">
+                   
+                    <label for="storePhone" class="form-label">電話</label>
+                    <input type="text" class="form-control" id="storePhone">
+                  </div>
+                  <div class="col-6">
+                    <label for="storeEmail" class="form-label">email</label>
+                    <input type="email" class="form-control" id="storeEmail">
+                  </div>
+                </div>
+  
+                <div class="modal-footer">
+                  <button id="statusUpdate" type="button" class="btn btn-primary" style="background-color: rgb(164, 160, 158);">更新</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 彈窗結束 -->
+
+		</main>
+
+</div>
+<script src="../js/headers.js"></script>
+	<script>
+   
+
+  const textarea = document.querySelector('#textarea');
+  const work_open = document.querySelector('#work_open');
+  const work_end = document.querySelector('#work_end');
+  const dayoff = document.querySelector('#dayoff');
+  let store_id = sessionStorage.getItem("account")
+  const mainImg = document.querySelector("#mainImg");
+  const firstImg = document.querySelector("#firstImg");
+  const secondImg = document.querySelector("#secondImg");
+  const meanuImgfirst = document.querySelector("#meanuImg");
+  const menauImgsecond = document.querySelector("#meanuImg2");
+  const errMsgImformation = document.querySelector("#errMsgImformation");
+  const storename = document.querySelector("#storename");
+      //取得店家資訊
+       
+                fetch('/TGA103G1-boot/api/StoreGetbackInformation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        account:store_id
+      }),
+    })
+      .then(resp => resp.json() )
+      .then(body => {
+       console.log(body)
+        storename.innerText = body[0].name,
+        textarea.value = body[0].produce,
+        work_open.value = body[0].work_open,
+        work_end.value = body[0].work_end,
+        dayoff.value = body[0].dayoff,
+        mainImg.src = body[0].img,
+        firstImg.src = body[1].img,
+        secondImg.src = body[2].img,
+        meanuImgfirst.src = body[3].img,
+        menauImgsecond.src = body[4].img
+      });
+
+     
+
+      let mainImgReader = new FileReader();
+      let firstImgReader = new FileReader();
+      let secondImgReader = new FileReader();
+      let menauImg1 = new FileReader();
+      let menauImg2 = new FileReader();
+      //首頁
+      document.querySelector("#p_file1").addEventListener("change", function(e){
+        if(this.files.length > 0){
+          document.querySelector("#preview1").innerHTML="";
+          
+          mainImgReader.readAsDataURL(this.files[0]);
+          mainImgReader.addEventListener("load", function(){
+          
+          let str = `
+            <img src="${mainImgReader.result}" class="preview_img id="mainImg" >
+          `;
+          document.querySelector("#preview1").innerHTML = str;
+          // console.log(mainImgReader.result)
+        });
+      
+        }else{
+          document.querySelector("#text1").innerText="預覽圖";
+        };
+      });
+  
+      // 內頁一
+      document.querySelector("#p_file2").addEventListener("change", function(e){
+        if(this.files.length > 0){
+          document.querySelector("#preview2").innerHTML="";
+          firstImgReader.readAsDataURL(this.files[0]);
+          firstImgReader.addEventListener("load", function(){
+          
+          let str = `
+            <img src="${firstImgReader.result}" class="preview_img"  id="firstImg">
+          `;
+          document.querySelector("#preview2").innerHTML = str;
+         
+        });
+      
+        }else{
+          document.querySelector("#text2").innerText="內頁一";
+        };
+      });
+ 
+      //內頁二
+
+      document.querySelector("#p_file3").addEventListener("change", function(e){
+        if(this.files.length > 0){
+          document.querySelector("#preview3").innerHTML="";
+          secondImgReader.readAsDataURL(this.files[0]);
+          secondImgReader.addEventListener("load", function(){
+          
+          let str = `
+            <img src="${secondImgReader.result}" class="preview_img" id="secondImg">
+          `;
+          document.querySelector("#preview3").innerHTML = str;
+         
+        });
+      
+        }else{
+          document.querySelector("#text3").innerText="內頁二";
+        };
+      });
+
+      //菜單一
+
+      document.querySelector("#p_file4").addEventListener("change", function(e){
+        if(this.files.length > 0){
+          document.querySelector("#preview4").innerHTML="";
+          menauImg1.readAsDataURL(this.files[0]);
+          menauImg1.addEventListener("load", function(){
+          
+          let str = `
+            <img src="${menauImg1.result}" class="preview_img" id="meanuImg" >
+          `;
+          document.querySelector("#preview4").innerHTML = str;
+         
+        });
+      
+        }else{
+          document.querySelector("#text4").innerText="內頁二";
+        };
+      });
+
+      //菜單二
+
+      document.querySelector("#p_file5").addEventListener("change", function(e){
+        if(this.files.length > 0){
+          document.querySelector("#preview5").innerHTML="";
+          menauImg2.readAsDataURL(this.files[0]);
+          menauImg2.addEventListener("load", function(){
+          
+          let str = `
+            <img src="${menauImg2.result}" class="preview_img"  id="meanuImg2">
+          `;
+          document.querySelector("#preview5").innerHTML = str;
+         
+        });
+      
+        }else{
+          document.querySelector("#text5").innerText="內頁二";
+        };
+      });
+
+
+      (() => {
+    //更新店家資訊
+  const errMsgUpdate = document.querySelector("#errMsgUpdate");
+  
+  document.getElementById('updatebtn').addEventListener('click', () => {
+// //判斷第一次選圖要全選
+//     console.log(mainImg.getAttribute('src') == "")
+//     if( mainImg.src == null && firstImg.src == null && secondImg.src == null && meanuImgfirst.src == null &&  menauImgsecond.src == null){
+//         alert("第一次請填寫完整")
+//         console.log("aa")
+//     }
+
+    fetch('/TGA103G1/StoreUpdate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        work_open: work_open.value,
+        work_end: work_end.value,
+        produce:textarea.value,
+        dayoff: dayoff.value
+      }),
+    })
+      .then(resp => resp.json() )
+      .then(body => {
+        const { successful, message } = body;
+         if (!successful) {
+          errMsgUpdate.textContent = message;
+         }
+  
+
+const errMsgUpdateImg = document.querySelector("#errMsgUpdateImg");
+          //圖片
+      fetch('/TGA103G1/StoreImgUpdate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        img: mainImgReader.result,
+        firstImg: firstImgReader.result,
+        secondImg: secondImgReader.result,
+        meanuImg: menauImg1.result,
+        meanuImg2: menauImg2.result,
+    
+      }),
+    })
+      .then(resp => resp.json() )
+      .then(body => {
+        console.log(body);
+        console.log(mainImgReader.result)
+        const { successful, message } = body;
+        console.log(body)
+         if (successful) {
+          //  location = '/TGA103G1/back-end/store/storealter.html';
+          alert("更新成功");
+         } else {
+          alert(message);
+         }
+      });
+      });
+  });
+})();
+      
+//店家資訊鈕
+document.querySelector("#store_inf").addEventListener("click" , function(){
+let account = sessionStorage.getItem("account")
+let storeName = document.querySelector("#storeName")
+let storePhone = document.querySelector("#storePhone")
+let storeAddress = document.querySelector("#storeAddress")
+let storeType = document.querySelector("#storeType")
+let storeEmail = document.querySelector("#storeEmail")
+
+fetch('/TGA103G1-boot/api/ShowStoreInformation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        account:account
+      }),
+    })
+      .then(resp => resp.json() )
+      .then(body => {
+        console.log(body);
+        storeName.value = body.account,
+        storePhone.value = body.phone,
+        storeAddress.value = body.address,
+        storeType.value = body.theme_id,
+        storeEmail.value = body.email
+
+      });
+
+
+});
+//店家資訊更新按鈕
+document.querySelector("#statusUpdate").addEventListener("click", function(){
+  let account = sessionStorage.getItem("account")
+  let storePhone = document.querySelector("#storePhone")
+  let storeEmail = document.querySelector("#storeEmail")
+  // console.log(account)
+
+  fetch('/TGA103G1-boot/api/StoreUpdateInfromation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        account:account,
+        phone:storePhone.value,
+        email:storeEmail.value
+      }),
+    })
+      .then(resp => resp.json() )
+      .then(body => {
+    	  console.log(body)
+        const{successful , message} = body
+        if(successful){
+          alert("更新成功") 
+          location = '/TGA103G1-boot/back-end/store/storealter.html';
+        }else{
+          alert(message)
+        }
+
+      });
+});
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+@charset "UTF-8";
+div.container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+div.container div.store_img {
+  margin: auto;
+  margin-top: 30px;
+}
+
+div.container .store_img img {
+  display: block;
+  width: 1000px;
+  height: 300px;
+}
+
+div.store_title {
+  text-align: center;
+}
+
+div.store_env img#firstImg {
+  margin: auto;
+  margin-bottom: 30px;
+  display: block;
+  width: 1000px;
+  height: 300px;
+}
+div.store_env img {
+  display: block;
+  margin: auto;
+  width: 1000px;
+  height: 300px;
+}
+div.store_meanu h1 {
+  text-align: center;
+}
+div.store_meanu img {
+  display: block;
+  margin: auto;
+  width: 1000px;
+  height: 300px;
+}
+div.store_product {
+  display: inline-block;
+  margin: auto;
+}
+div.store_product h1 {
+  text-align: center;
+}
+img.img_pro {
+  width: 200px;
+}
+div.store_product div.pro_2,
+div.pro_1 {
+  display: inline-block;
+  text-align: center;
+  margin: 30px;
+}
+
+div.store_open {
+  text-align: center;
+}
+/* 商品 */
+ul#storeProduct{
+    list-style: none;
+    display: flex;
+    font-size: 25px;
+}
+p{
+	font-size: 20px;
+}

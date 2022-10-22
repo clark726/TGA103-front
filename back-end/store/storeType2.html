@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Document</title>
+<link rel="stylesheet" href="../../css/storeType.css" />
+<link rel="stylesheet" href="../../css/header.css" />
+<link rel="stylesheet" href="../../css/footer.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+</head>
+<body style="background-color: rgb(216, 208, 208)">
+	<div id="xxx"></div>
+	<main class="main">
+		<div class="top">
+			<div class="div_produce">
+				<div class="div_title">
+					<h1 id="storetype"></h1>
+				</div>
+				<p id="storeproduce"></p>
+			</div>
+			<div class="div_img">
+				<img src="" id="displayImg" style="width: 600px; height: 200px" />
+			</div>
+		</div>
+		<hr />
+
+		<div class="botton">
+			<ul class="item_list"></ul>
+		</div>
+	</main>
+	<div w3-include-html="./commhtml/footer.html"></div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script>
+	function includeHTML() {
+		const xxx = document.querySelector('#xxx');
+			fetch('/TGA103G1/com/header.html')
+				.then(resp => resp.text())
+				.then(content => {
+					xxx.innerHTML = content;
+
+					changelog()
+					logout()
+					changeTheme()
+					like()
+					clickStore()
+					const username = document.querySelector('#account');
+					const password = document.querySelector('#password');
+					const errMsg = document.querySelector('#errMsg');
+					document.getElementById('btn1').addEventListener('click', () => {
+					    fetch('/TGA103G1/StoreLogin', {
+					      method: 'POST',
+					      headers: { 'Content-Type': 'application/json' },
+					      body: JSON.stringify({
+					        account: username.value,
+					        password: password.value
+					      }),
+					    })
+					      .then(resp => resp.json() )
+					      .then(body => {
+					        errMsg.textContent = "";
+					        const { successful, message } = body;
+					        if (successful) {
+					          const { account, password} = body;
+					          sessionStorage.setItem('account', account);
+					          sessionStorage.setItem('password', password);
+					    
+					        } else {
+					          errMsg.textContent = message;
+					        }
+					      });
+					  });			
+				});
+				
+	}
+	includeHTML();
+	
+	 //登出鈕
+    function changelog() {
+if (sessionStorage.getItem("account")) {
+  document.querySelector("#login").style.display = "none";
+  document.querySelector("#logout").style.display = "block";
+  document.querySelector("#loginbox").style.display = "none";
+  document.querySelector("#normal").style.display = "block";
+}
+}
+	 
+  //登出
+  function logout(){
+    document.querySelector("#logout").addEventListener("click", function(){
+        sessionStorage.removeItem("account")
+      })
+  }
+	//加入最愛
+	function like(){
+	  $(document).on("click",".fa-solid", function(e){
+		$(e.target).toggleClass("-on")		
+	  })	
+    };
+	
+	//點擊theme_id
+	function changeTheme(){
+let allthemeid =  document.querySelectorAll(".theme_id");
+allthemeid.forEach(function(e){
+  e.addEventListener("click", function(e){
+		let id = e.target.getAttribute("data-themid");
+		sessionStorage.setItem("themeId",id)
+  })
+})
+}
+	//點擊store_id
+	function clickStore(){
+		$(document).on("click" ,"li#storeId", function(e){
+			console.log(e.target)
+		})
+	}
+
+
+	let themeId = sessionStorage.getItem("themeId");
+	let storetype =  document.querySelector("#storetype");
+	let storeproduce =  document.querySelector("#storeproduce");
+	let displayImg =  document.querySelector("#displayImg");
+
+	fetch("/TGA103G1/ShowStoreType", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        theme_id: themeId
+      }),
+    })
+      .then(resp => resp.json())
+      .then(body => {
+		/* console.log(body) */
+    	  storetype.textContent = body[0].storetype
+    	  storeproduce.textContent = body[0].storeproduce 
+		  displayImg.src = body[0].imgstr
+
+		for(var i = 0; i < body['length']; i++){
+			// console.log(body[i])
+			$("ul.item_list").append(`
+			 	<li id="storeId" data-store_id="${body[i].store_id}" ><i class="fa-solid fa-heart"></i> 
+			 		<a href="">
+			 			<div class="img_block">
+			 				<img src="${body[i].imgstr}" />
+			 			</div>
+			 			<div class="icon">
+			 				<span class="item_text">${body[i].name}</span>
+			 			</div>
+			 	</a></li>`)
+		}
+
+      });
+
+  </script>
+</html>
