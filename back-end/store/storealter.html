@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8" /> 
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Document</title>
@@ -29,15 +29,15 @@
 				</div>
 				<div>
 					<a class="manager_item" type="button"
-						href="../product/productlist.jsp">商品管理</a>
+						href="/back-end/product/productlist.html">商品管理</a>
 				</div>
 				<div>
 					<a class="edit_item" type="button"
-          href="/TGA103G1-boot/back-end/store/storeOrder.html">修改商家訂單內容</a>
+          href="/back-end/store/storeOrder.html">修改商家訂單內容</a>
 				</div>
         <div>
 					<a class="edit_item" type="button"
-						href="/TGA103G1-boot/back-end/store/storeChat.html">店家私信</a>
+						href="/back-end/store/storeChat.html">店家私信</a>
 				</div>
 			</div>
 		</aside>
@@ -207,7 +207,7 @@
   const work_open = document.querySelector('#work_open');
   const work_end = document.querySelector('#work_end');
   const dayoff = document.querySelector('#dayoff');
-  let store_id = sessionStorage.getItem("account")
+  let jwts = localStorage.getItem("account")
   const mainImg = document.querySelector("#mainImg");
   const firstImg = document.querySelector("#firstImg");
   const secondImg = document.querySelector("#secondImg");
@@ -217,13 +217,12 @@
   const storename = document.querySelector("#storename");
       //取得店家資訊
        
-                fetch('/TGA103G1-boot/api/StoreGetbackInformation', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        account:store_id
-      }),
-    })
+                fetch('http://localhost:8080/api/StoreGetbackInformation', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' ,
+                 'Authorization':jwts
+               },
+      })
       .then(resp => resp.json() )
       .then(body => {
        console.log(body)
@@ -349,7 +348,7 @@
       (() => {
     //更新店家資訊
   const errMsgUpdate = document.querySelector("#errMsgUpdate");
-  
+  let storeIdJwt = localStorage.getItem("storeId");
   document.getElementById('updatebtn').addEventListener('click', () => {
 // //判斷第一次選圖要全選
 //     console.log(mainImg.getAttribute('src') == "")
@@ -358,9 +357,11 @@
 //         console.log("aa")
 //     }
 
-    fetch('/TGA103G1/StoreUpdate', {
+    fetch('http://localhost:8080/api/StoreUpdate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',
+                'Authorization':storeIdJwt
+               },
       body: JSON.stringify({
         work_open: work_open.value,
         work_end: work_end.value,
@@ -378,9 +379,11 @@
 
 const errMsgUpdateImg = document.querySelector("#errMsgUpdateImg");
           //圖片
-      fetch('/TGA103G1/StoreImgUpdate', {
+      fetch('http://localhost:8080/api/StoreImgUpdate', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',
+                 'Authorization':storeIdJwt
+               },
       body: JSON.stringify({
         img: mainImgReader.result,
         firstImg: firstImgReader.result,
@@ -416,7 +419,7 @@ let storeAddress = document.querySelector("#storeAddress")
 let storeType = document.querySelector("#storeType")
 let storeEmail = document.querySelector("#storeEmail")
 
-fetch('/TGA103G1-boot/api/ShowStoreInformation', {
+fetch('http://localhost:8080/api/ShowStoreInformation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -443,7 +446,7 @@ document.querySelector("#statusUpdate").addEventListener("click", function(){
   let storeEmail = document.querySelector("#storeEmail")
   // console.log(account)
 
-  fetch('/TGA103G1-boot/api/StoreUpdateInfromation', {
+  fetch('http://localhost:8080/api/StoreUpdateInfromation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -458,7 +461,7 @@ document.querySelector("#statusUpdate").addEventListener("click", function(){
         const{successful , message} = body
         if(successful){
           alert("更新成功") 
-          location = '/TGA103G1-boot/back-end/store/storealter.html';
+          location = 'http://localhost:8080/back-end/store/storealter.html';
         }else{
           alert(message)
         }

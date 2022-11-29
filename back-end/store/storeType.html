@@ -75,7 +75,7 @@
             ></button>
           </div>
           <!-- body -->
-          <div class="modal-body"></div>
+          <div class="modal-body"></div> 
 
           <!-- 聊天表單 -->
           <div class="container">
@@ -160,6 +160,17 @@
         class="picture"
       />
     </div>
+    <!-- 分頁 -->
+    <nav aria-label="Page navigation example" style="display: flex; justify-content: center;">
+      <ul class="pagination" id="pageUl">
+        <li class="page-item" id="pageli">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- 分頁 -->
 
     <script
       src="https://code.jquery.com/jquery-3.6.1.js"
@@ -170,7 +181,7 @@
     <script>
       function includeHTML() {
         const xxx = document.querySelector("#xxx");
-        fetch("/TGA103G1-boot/com/header.html")
+        fetch("/com/header.html")
           .then((resp) => resp.text())
           .then((content) => {
             xxx.innerHTML = content;
@@ -184,7 +195,7 @@
             const password = document.querySelector("#password");
             const errMsg = document.querySelector("#errMsg");
             document.getElementById("btn1").addEventListener("click", () => {
-              fetch("/TGA103G1-boot/StoreLogin", {
+              fetch("http://localhost:8080/api/StoreLogin", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -240,7 +251,7 @@
           } else {
             $(this).toggleClass("-on");
             if ($(this).hasClass("-on")) {
-              fetch("/TGA103G1-boot/AddFavorite", {
+              fetch("http://localhost:8080/AddFavorite", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -252,7 +263,7 @@
                   console.log(body);
                 });
             } else {
-              fetch("/TGA103G1-boot/DeleteFavorite", {
+              fetch("http://localhost:8080/DeleteFavorite", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -289,21 +300,21 @@
 
       //先看是否有我的最愛
       let arrayFavorite = new Array();
-      fetch("/TGA103G1-boot/FindFavorite", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((resp) => resp.json())
-        .then((body) => {
-          console.log(body);
-          for (var i = 0; i < body.length; i++) {
-            let favoritedStore = body[i].store_id;
-            if (arrayFavorite != null) {
-              arrayFavorite.push(favoritedStore);
-            }
-          }
-          sessionStorage.setItem("favoritedStore", arrayFavorite);
-        });
+      // fetch("http://localhost:8080/FindFavorite", {
+      //   method: "GET",
+      //   headers: { "Content-Type": "application/json" },
+      // })
+      //   .then((resp) => resp.json())
+      //   .then((body) => {
+      //     console.log(body);
+      //     for (var i = 0; i < body.length; i++) {
+      //       let favoritedStore = body[i].store_id;
+      //       if (arrayFavorite != null) {
+      //         arrayFavorite.push(favoritedStore);
+      //       }
+      //     }
+      //     sessionStorage.setItem("favoritedStore", arrayFavorite);
+      //   });
 
       //抓取店家
       let themeId = sessionStorage.getItem("themeId");
@@ -311,7 +322,7 @@
       let storeproduce = document.querySelector("#storeproduce");
       let displayImg = document.querySelector("#displayImg");
 
-      fetch("/TGA103G1-boot/ShowStoreType", {
+      fetch("http://localhost:8080/api/ShowStoreType", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -323,57 +334,77 @@
           storetype.textContent = body[0].storetype;
           storeproduce.textContent = body[0].storeproduce;
           displayImg.src = body[0].imgstr;
-          //判斷是否有會員 有我的最愛加上愛心
-          if (arrayFavorite != null) {
-            for (var i = 0; i < body["length"]; i++) {
-              // console.log(body[i])
-              var x = 0;
-              for (var j = 0; j < arrayFavorite.length; j++) {
-                if (body[i].store_id == arrayFavorite[j]) {
-                  x = arrayFavorite[j];
-                  $("ul.item_list").append(`
-					 <li><i data-storeId ="${body[i].store_id}" class="fa-solid fa-heart -on"></i> 
-						<i class="fa-sharp fa-solid fa-comment-dots clickIcon" id="${body[i].name}" ></i>
-					<a href="/TGA103G1-boot/back-end/store/store.html">
-							 <div class="img_block">
-								 <img src="${body[i].imgstr}" id="storeId" data-store_id="${body[i].store_id}" />
-							 </div>
-							 <div class="icon">
-								 <span class="item_text">${body[i].name}</span>
-							 </div>
-							 </a></li>`);
-                }
-              }
-              if (body[i].store_id != x) {
-                $("ul.item_list").append(`
-						 <li><i data-storeId="${body[i].store_id}" class="fa-solid fa-heart"></i> 
-							<i class="fa-sharp fa-solid fa-comment-dots clickIcon"  id="${body[i].name}" ></i>
-						<a href="/TGA103G1-boot/back-end/store/store.html">
-								 <div class="img_block">
-									 <img src="${body[i].imgstr}" id="storeId" data-store_id="${body[i].store_id}" />
-								 </div>
-								 <div class="icon">
-									 <span class="item_text">${body[i].name}</span>
-								 </div>
-								 </a></li>`);
-              }
+          console.log(body)
+          sessionStorage.setItem("storePage", JSON.stringify(body))
+          pageJarge(body)
+          
+           
+              for (var i = 0; i <= 3; i++) {
+               
+                var li = document.createElement('li');
+                li.innerHTML=`<i data-storeId="${body[i].store_id}" class="fa-solid fa-heart"></i> 	<i class="fa-sharp fa-solid fa-comment-dots clickIcon" id="${body[i].name}" ></i>	<a href="http://localhost:8080/back-end/store/store.html">	 <div class="img_block"> <img src="${body[i].imgstr}" id="storeId" data-store_id="${body[i].store_id}" / </div> <div class="icon"> <span class="item_text">${body[i].name}</span> </div></a>`
+                document.querySelector("ul.item_list").appendChild(li)
+
+            //   $("ul.item_list").append(`
+						//  <li><i data-storeId="${body[i].store_id}" class="fa-solid fa-heart"></i> 
+						// 	<i class="fa-sharp fa-solid fa-comment-dots clickIcon" id="${body[i].name}" ></i>
+						// <a href="http://localhost:8080/back-end/store/store.html">
+						// 		 <div class="img_block">
+						// 			 <img src="${body[i].imgstr}" id="storeId" data-store_id="${body[i].store_id}" />
+						// 		 </div>
+						// 		 <div class="icon">
+						// 			 <span class="item_text">${body[i].name}</span>
+						// 		 </div>
+						// 		 </a></li>`);
+            
             }
-          } else {
-            for (var i = 0; i < body.length; i++) {
-              $("ul.item_list").append(`
-						 <li><i data-storeId="${body[i].store_id}" class="fa-solid fa-heart"></i> 
-							<i class="fa-sharp fa-solid fa-comment-dots clickIcon" id="${body[i].name}" ></i>
-						<a href="/TGA103G1-boot/back-end/store/store.html">
-								 <div class="img_block">
-									 <img src="${body[i].imgstr}" id="storeId" data-store_id="${body[i].store_id}" />
-								 </div>
-								 <div class="icon">
-									 <span class="item_text">${body[i].name}</span>
-								 </div>
-								 </a></li>`);
-            }
-          }
         });
+        //點擊分頁
+        $(document).on("click" , ".targetPage" , function(e){
+            let storePage = JSON.parse(sessionStorage.getItem("storePage"))
+            let show = 4;
+            let page = $(e.target).attr("data-page")
+            let pages = show* (page-1);
+            console.log(storePage[0].store_id)
+            $("ul.item_list").html("");
+            for(var i = pages; i <= pages+ show-1; i++){
+              $("ul.item_list").append(`
+              <li><i data-storeId="${storePage[i].store_id}" class="fa-solid fa-heart"></i> 
+							<i class="fa-sharp fa-solid fa-comment-dots clickIcon" id="${storePage[i].name}" ></i>
+						<a href="http://localhost:8080/back-end/store/store.html">
+								 <div class="img_block">
+									 <img src="${storePage[i].imgstr}" id="storeId" data-store_id="${storePage[i].store_id}" />
+								 </div>
+								 <div class="icon">
+									 <span class="item_text">${storePage[i].name}</span>
+								 </div>
+								 </a></li>
+              `)
+            }
+            
+        });
+        //分頁判斷
+        function pageJarge(e ){
+          let total = e.length;
+          let show = 4;
+          let page = total / show;
+          if(total%show > 0){
+            page++;
+          }
+          for(var i = 1; i <= page; i++){
+            $("#pageUl").append(`
+              <li  class="page-item"><a data-page="${i}" class="page-link targetPage">${i}</a></li>
+              `);
+          }
+          $("#pageUl").append(`
+          <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+              `);
+        }
+
 
       //WS 全體推播
       let MyPointWS = "/TogetherWS/james";

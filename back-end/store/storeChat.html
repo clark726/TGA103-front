@@ -28,19 +28,19 @@
 			<div class="div_func">
 				<div>
 					<a class="edit_store" type="button"
-						href="/TGA103G1/back-end/store/storealter.html">修改店家內容</a>
+						href="/back-end/store/storealter.html">修改店家內容</a>
 				</div>
 				<div>
 					<a class="manager_item" type="button"
-						href="../product/productlist.jsp">商品管理</a>
+						href="/back-end/product/productlist.html">商品管理</a>
 				</div>
 				<div>
 					<a class="edit_item" type="button"
-						href="/TGA103G1/back-end/store/storeOrder.html">修改商家訂單內容</a>
+						href="/back-end/store/storeOrder.html">修改商家訂單內容</a>
 				</div>
 				<div>
 					<a class="edit_item" type="button"
-						href="/TGA103G1/back-end/store/storeChat.html">店家私信</a>
+						href="/back-end/store/storeChat.html">店家私信</a>
 				</div>
 
 			</div>
@@ -68,14 +68,14 @@
 	<script src="https://code.jquery.com/jquery-3.6.1.js"
 		integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
 		crossorigin="anonymous"></script>
-	<script src="../js/header.js"></script>
+	<script src="../js/headers.js"></script>
 	<script>
    
 
 //拿回店家名字
 let account = sessionStorage.getItem("account")
 const storeName = document.querySelector("#storeName")
-fetch('/TGA103G1/ShowStoreInformation', {
+fetch('http://localhost:8080/api/ShowStoreInformation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -94,7 +94,7 @@ fetch('/TGA103G1/ShowStoreInformation', {
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));
-	var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+	var endPointURL = "ws://localhost:8080" + MyPoint;
 
 	var statusOutput = document.getElementById("statusOutput");
 	var messagesArea = document.getElementById("messagesArea");
@@ -103,8 +103,8 @@ fetch('/TGA103G1/ShowStoreInformation', {
 
 	function connect() {
 		// create a websocket
+		console.log(endPointURL)
 		webSocket = new WebSocket(endPointURL);
-		console.log(storeName.textContent)
 		webSocket.onopen = function(event) {
 			console.log("Connect Success!");
 			document.getElementById('sendMessage').disabled = false;

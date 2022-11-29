@@ -1,6 +1,6 @@
 function includeHTML() {
 	const xxx = document.querySelector("#xxx");
-	fetch("/TGA103G1-boot/com/header.html")
+	fetch("/com/header.html")
 		.then((resp) => resp.text())
 		.then((content) => {
 			xxx.innerHTML = content;
@@ -11,7 +11,7 @@ function includeHTML() {
 			const password = document.querySelector("#password");
 			const errMsg = document.querySelector("#errMsg");
 			document.getElementById("btn1").addEventListener("click", () => {
-				fetch("/TGA103G1-boot/api/StoreLogin", {
+				fetch("http://localhost:8080/api/StoreLogin", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
@@ -26,7 +26,7 @@ function includeHTML() {
 						if (successful) {
 							const { account, password } = body;
 							sessionStorage.setItem("account", account);
-							location = "/TGA103G1-boot/api/ShowProduct";
+							location = "http://localhost:8080/api/ShowProduct";
 						} else {
 							errMsg.textContent = message;
 						}

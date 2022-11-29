@@ -28,20 +28,20 @@
 		</div>
 
 		<nav class="fl_right">
-			<ul class="nav_ul">
+			<ul class="nav_ul"> 
 				<li><a href="#" id="home">HOME</a></li>
 				<li><a href="#">地圖</a></li>
 				<li><a href="#">討論區</a></li>
 				<li><a href="#" data-bs-toggle="modal" id="loginbox"
 					data-bs-target="#loginModal">廠商專區</a><a
-					href="/TGA103G1/ShowProduct" id="normal"
+					href="http://localhost:8080/ShowProduct" id="normal"
 					style="display: none; width: 65px;">廠商專區</a></li>
 				<li><a href="#" class="icon">店家主題</a>
 					<ul id="store" class="dropdown-menu">
-						<li><a href="/TGA103G1-boot/back-end/store/storeType.html" data-themid="1" class="theme_id">Bistro</a></li>
-						<li><a href="/TGA103G1-boot/back-end/store/storeType.html" data-themid="2" class="theme_id">Cocktail
+						<li><a href="/back-end/store/storeType.html" data-themid="1" class="theme_id">Bistro</a></li>
+						<li><a href="http://localhost:8080/back-end/store/storeType.html" data-themid="2" class="theme_id">Cocktail
 								bar</a></li>
-						<li><a href="/TGA103G1-boot/back-end/store/storeType.html" data-themid="3" class="theme_id">Whisky
+						<li><a href="http://localhost:8080/back-end/store/storeType.html" data-themid="3" class="theme_id">Whisky
 								bar</a></li>
 					</ul></li>
 				<li><a href="#" class="icon">會員專區</a>
@@ -53,7 +53,7 @@
 					</ul></li>
 
 
-				<li><a href="/TGA103G1/back-end/shop/shopProduct.html">購物商城</a></li>
+				<li><a href="/back-end/shop/shopProduct.html">購物商城</a></li>
 				<li><a href="/TGA103G1/front-end/member/login.jsp" id="login">登入註冊</a><a
 					href="/TGA103G1/StoreLogout" id="logout"
 					style="display: none; width: 40px;">登出</a></li>
@@ -242,9 +242,10 @@
         errMsg.textContent = "";
         const { successful, message } = body;
         if (successful) {
-          const { account, password } = body;
-          sessionStorage.setItem("account", account);
-          location = "/TGA103G1-boot/back-end/store/storealter.html";
+          const { account, password , jwts , email} = body;
+          localStorage.setItem("account", jwts);
+		  localStorage.setItem("storeId", email);
+          location = "/back-end/store/storealter.html";
         } else {
           errMsg.textContent = message;
         }

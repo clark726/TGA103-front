@@ -56,7 +56,7 @@
         </div>
       </aside>
       <main class="main">
-        <h1>{{message}} </h1>
+        <h1 @click="helloBtn">{{message}} </h1>
         <div class="container">
           <!-- <div class="row row-cols-1 row-cols-md-4 g-5" id="row">{{message}}</div> -->
           <div class="row row-cols-1 row-cols-md-4 g-5" id="rows">
@@ -70,7 +70,7 @@
                   <div class="card-text">
                     <span>$</span><span id="price">{{item.price}}</span>
                   </div>
-                  <p style="display:inline-block ;">訂購數量</p>
+                  <p style="display:inline-block ;">訂購數量</p> 
                   <select name="amount" id="">
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -111,7 +111,7 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary"> <a id="checkBtn"
                       style="text-decoration: none; color: white;"
-                      href="/TGA103G1/back-end/shop/shopCheck.html">前往結帳</a> </button>
+                      href="/back-end/shop/shopCheck.html">前往結帳</a> </button>
                 </div>
               </div>
             </div>
@@ -133,18 +133,20 @@
           data: []
         }
       },
-      method: {
-
+      methods: {
+        helloBtn(){
+          alert("hello")
+        },
       },
       created: function () {
         const requestOptions = {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         };
-        fetch("/TGA103G1-boot/api/GetProductByTypeId", requestOptions)
+        fetch("http://localhost:8080/api/GetProductByTypeId", requestOptions)
           .then(response => response.json())
           .then(body => {
-            let url = "/TGA103G1-boot/api/ShowStorePage?action=getImg&product_id="
+            let url = "http://localhost:8080/api/ShowStorePage?action=getImg&product_id="
            
             this.data = body.map((e)=>{
               e.product_id = url+e.product_id
@@ -155,9 +157,9 @@
       }
     }).mount("#vueAll")
 
-    let url = "/TGA103G1-boot/api/ShowStorePage?action=getImg&product_id=";
+    let url = "http://localhost:8080/api/ShowStorePage?action=getImg&product_id=";
     //進到頁面顯示全部商品
-    fetch('/TGA103G1-boot/api/GetProductByTypeId', {
+    fetch('http://localhost:8080/api/GetProductByTypeId', {
       method: 'GET',
       headers: { 'Content-type': 'application/json' },
     })
@@ -206,7 +208,7 @@
       let dataId = e.target.getAttribute("data-id");
       //先清空
       $("#row").html("")
-      fetch('/TGA103G1-boot/api/GetProductByTypeId', {
+      fetch('http://localhost:8080/api/GetProductByTypeId', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -29,19 +29,19 @@
 			<div class="div_func">
 				<div>
 					<a class="edit_store" type="button"
-						href="/TGA103G1-boot/back-end/store/storealter.html">修改店家內容</a>
+						href="/back-end/store/storealter.html">修改店家內容</a>
 				</div>
 				<div>
 					<a class="manager_item" type="button"
-						href="../product/productlist.jsp">商品管理</a>
+						href="/back-end/product/productlist.html">商品管理</a>
 				</div>
 				<div>
 					<a class="edit_item" type="button"
-						href="/TGA103G1-boot/back-end/store/storeOrder.html">修改商家訂單內容</a>
+						href="/back-end/store/storeOrder.html">修改商家訂單內容</a>
 				</div>
 				<div>
 					<a class="edit_item" type="button"
-						href="/TGA103G1-boot/back-end/store/storeChat.html">店家私信</a>
+						href="/back-end/store/storeChat.html">店家私信</a>
 				</div>
 			</div>
 		</aside>
@@ -160,7 +160,7 @@ const tbody = document.querySelector("#tbody");
  
      //查全部
      if(inputorderId.value == ""){
-     fetch('/TGA103G1-boot/api/SelectOrderByAccount', {
+     fetch('http://localhost:8080/api/SelectOrderByAccount', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -195,7 +195,7 @@ const tbody = document.querySelector("#tbody");
   }
     //依訂單編號
     if(inputorderId.value != ""){
-      fetch('/TGA103G1-boot/api/SelectOrderByOrderId', {
+      fetch('http://localhost:8080/api/SelectOrderByOrderId', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -240,7 +240,7 @@ const tbody = document.querySelector("#tbody");
 
  //準備中按鈕
 document.querySelector("#preBtn").addEventListener("click" , function(){
-  fetch('/TGA103G1-boot/api/SelectOrderByStatus', {
+  fetch('http://localhost:8080/api/SelectOrderByStatus', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -277,7 +277,7 @@ document.querySelector("#preBtn").addEventListener("click" , function(){
 
 //已出貨按鈕
 document.querySelector("#ShippingBtn").addEventListener("click" , function(){
-  fetch('/TGA103G1-boot/api/SelectOrderByStatus', {
+  fetch('http://localhost:8080/api/SelectOrderByStatus', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -317,7 +317,7 @@ document.querySelector("#ShippingBtn").addEventListener("click" , function(){
   var order_id;
   $(document).on("click" ,"#order_detail", function(e){
      order_id =  $(e.target).attr("data-orderId")
-    fetch('/TGA103G1-boot/GetOrderDetail', {
+    fetch('http://localhost:8080/GetOrderDetail', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -341,7 +341,7 @@ document.querySelector("#ShippingBtn").addEventListener("click" , function(){
 //statusUpdate更新狀態
 $(document).on("click" ,"#statusUpdate" , function(){
    let status =  statusSelect.value;
-   fetch('/TGA103G1-boot/UpdateStatus', {
+   fetch('http://localhost:8080/UpdateStatus', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -354,7 +354,7 @@ $(document).on("click" ,"#statusUpdate" , function(){
         const{order_id , successful} = body;
         if(successful){
           alert("修改完成")
-          location = "/TGA103G1-boot/back-end/store/storeOrder.html";
+          location = "http://localhost:8080/back-end/store/storeOrder.html";
         }
     });
 
